@@ -1,18 +1,19 @@
-from core.router_llm import route_llm as route
-from skills import conversation,system
-
-def think(user_input: str) -> str:
-    """
-    Central decision-making function for R.E.G.G.I.E.
-    It takes what the router returns and decides which skill to invoke based on the user's input.
-    """
-
-    decision = route(user_input)
-
-    if decision == 'conversation':
-        return conversation.handle(user_input)
+import requests
+class Brain:
     
-    if decision == 'system':
-        return system.handle(user_input)
+    def __init__(self, model="llama3"):
+        self.model = model
+        self.url = 'http://localhost:11434/api/generate'
     
-    return "I'm not sure how to help with that just yet."
+    def generate(self, prompt: str) -> str:
+        response = requests.post(
+            self.url,
+            json={
+                "model": self.model,
+                "prompt": prompt,
+                "stream": False
+            }
+        )
+
+        result = response.json()
+        return result["response"]
