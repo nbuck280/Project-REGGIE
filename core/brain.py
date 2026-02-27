@@ -1,4 +1,4 @@
-from core.router import route
+from core.router_llm import route_llm as route
 from skills import conversation,system
 
 def think(user_input: str) -> str:
