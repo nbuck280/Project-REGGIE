@@ -5,6 +5,7 @@ class Brain:
         self.model = model
         self.url = 'http://localhost:11434/api/generate'
     
+    # Simple method to send a prompt to the language model and get a response
     def generate(self, prompt: str) -> str:
         response = requests.post(
             self.url,
